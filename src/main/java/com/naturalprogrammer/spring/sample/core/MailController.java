@@ -1,5 +1,7 @@
 package com.naturalprogrammer.spring.sample.core;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,15 +32,20 @@ public class MailController {
 	
 	// @Autowired is similar to @Resource, but it also works on constructors
 	// Unlike @Resource, @Autowire does not take the name parameter, but it uses @Qualifier
-	@Autowired
+	/*@Autowired
 	public MailController(@Qualifier("smtp") MailSender mailSender) {
+		this.mailSender = mailSender;
+	}*/
+	
+	@Autowired
+	public MailController(MailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 	
 	
 	@RequestMapping("/mail")
-	public String sendMail() {
-		mailSender.send("abc@example", "working?", "working on friday?");
+	public String sendMail() throws MessagingException {
+		mailSender.send("xxx", "working?", "working on friday?");
 		return "Mail sent";
 	}
 	
